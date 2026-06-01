@@ -13,18 +13,33 @@ A hardware-based product at Criterion is split into three distinct package level
 ```
 CT-PR-XXXX  (Project)
 │
+├── BOM-master.csv  ← project-level master BOM (PM owns — aggregates all package BOMs)
+│
 ├── EPR-XXX   Firmware Package          ← runs ON the hardware
 │     └── hardware/ (submodule)
 │           └── HPR-XXX               ← hardware unit it targets
 │                 └── pcbs/ (submodules)
-│                       ├── PCB-CR-XXX  ← individual PCB #1
-│                       └── PCB-CR-YYY  ← individual PCB #2
+│                       ├── PCB-CR-XXX  ← individual PCB #1  → BOM.csv
+│                       └── PCB-CR-YYY  ← individual PCB #2  → BOM.csv
+│                 └── BOM-combined.csv  ← all PCBs in this unit
 │
+├── MPR-XXX   Mechanical Package       ← enclosure, housing → parts list
 ├── SPR-XXX   Software Package         ← cloud / desktop / mobile app
-├── MPR-XXX   Mechanical Package       ← enclosure, housing
 ├── TPR-XXX   Test Package             ← V&V protocols
 └── RPR-XXX   Regulatory Package       ← CDSCO / EU MDR
 ```
+
+**BOM roll-up:**
+```
+PCB-CR-001 BOM.csv  ──┐
+PCB-CR-002 BOM.csv  ──┤── HPR-001 BOM-combined.csv  ──┐
+                                                        ├── CT-PR BOM-master.csv
+PCB-CR-003 BOM.csv  ──── HPR-002 BOM-combined.csv  ──┤
+                                                        │
+MPR-XXX parts list  ────────────────────────────────────┘
+```
+
+**Owner:** PM. `BOM-master.csv` is not a new design activity — it is a mechanical aggregation of package-level BOMs already produced by each discipline. PM assembles it at Gate 2 and keeps it current at each gate thereafter.
 
 The three hardware levels are:
 
@@ -210,6 +225,7 @@ Each level knows exactly what changed and when. No version guesswork.
 
 | Item | Lives in | Never in |
 |------|---------|---------|
+| Master BOM (all packages combined) | CT-PR PM repo root — `BOM-master.csv` | Package repos |
 | PCB schematic source | PCB-CR repo | HPR or EPR repos |
 | Individual PCB BOM | PCB-CR repo | HPR or EPR repos |
 | Individual PCB Gerbers | PCB-CR repo | HPR or EPR repos |
@@ -254,6 +270,7 @@ The HPR row must list all PCB-CR IDs it groups. The EPR row must reference the H
 
 | Question | Where to look |
 |----------|-------------|
+| What is the complete BOM for this product? | CT-PR PM repo → `BOM-master.csv` |
 | Which PCBs are in this hardware unit? | HPR repo → `pcbs/refs.md` or `docs/version-baseline.md` |
 | What version of the power board is in production? | EPR repo → `docs/config-baseline.md` |
 | Where is the Gerber for PCB-CR-002 v1.2? | PCB-CR-002 repo → `Gerbers/`, tag `v1.2.0` |
