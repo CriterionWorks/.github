@@ -39,6 +39,7 @@ SPR-XXX/
 │
 ├── docs/                        ← all project documents (required)
 │   ├── setup.md                 ← how to install and run (required)
+│   ├── software-baseline.md     ← software version + dependencies + environment baseline (required)
 │   └── ...                      ← SRS, architecture, test logs, any other docs
 │
 ├── misc/                        ← anything that doesn't fit above
@@ -57,6 +58,7 @@ SPR-XXX/
 | `spr<number>/` source folder | Yes | Lowercase, named after the package ID |
 | `docs/setup.md` | Yes | Must be complete enough for someone to clone and run |
 | `docs/` for all documents | Yes | SRS, architecture, logs, specs all go here |
+| `docs/software-baseline.md` | Yes | Version + dependencies + environment locked per release |
 | `misc/` | No | Handy for loose files — use it freely |
 | Everything else | Flexible | Structure as suits the project |
 
@@ -72,6 +74,29 @@ SPR-XXX/
 
 Commit message format: `SPR<number>-<item>: short description`
 Example: `SPR072-003: add QRS peak detection`
+
+---
+
+## Software Baseline — `docs/software-baseline.md`
+
+Every SPR release must have a baseline entry documenting the exact software version, dependencies, and environment that was tested and approved:
+
+```
+## SPR-XXX vX.X — Software Baseline
+
+| Item                  | Version / Value     | Notes                          |
+|-----------------------|---------------------|--------------------------------|
+| Software              | vX.X.X              | tag: vX.X.X                    |
+| OS / Platform         | e.g. Ubuntu 22.04   |                                |
+| Runtime               | e.g. Python 3.11    |                                |
+| Key dependencies      | e.g. numpy 1.26     | see requirements.txt           |
+| Hardware interface    | EPR-XXX vX.X        | if SPR runs on / talks to HW   |
+
+Tested on: [date]
+Approved by: [name]
+```
+
+If the SPR interfaces with hardware (EPR/HPR), always record which EPR version it was tested against.
 
 ---
 
