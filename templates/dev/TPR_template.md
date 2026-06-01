@@ -36,8 +36,17 @@ State whether this is a **Project-level** or **Package-level** TPR:
 **Project-level TPR** — covers the full system: integration, system, verification, and validation.
 Written by: QA engineer / test engineer, independent from development.
 
-**Package-level TPR** — covers one package (SPR, EPR, HPR, PCB-CR, DPR): unit tests, bring-up, HIT, package verification.
-Written by: the developer who owns that package.
+**Package-level TPR** — covers formal verification records for one package (SPR, EPR, HPR, PCB-CR, DPR).
+Written by: test lead / QA, independent from the developer who built the package.
+
+> **Important — what does NOT live here:**
+> - Informal unit test logs and HIT session logs → stay in EPR / SPR repo `docs/` and session files
+> - Software release records and baselines → stay in SPR `docs/software-baseline.md`
+> - Config baselines (firmware + hardware versions) → stay in EPR `docs/config-baseline.md`
+> - Requirements and acceptance criteria → stay in ERS / SRS in the CT-PR PM repo
+>
+> TPR owns: **formal test protocols (DS-12)** and **formal test results / records (DS-13)** that enter the DHF.
+> SRS / ERS define *what* must pass. TPR defines *how* it is tested and records *whether it passed*.
 
 > Set `level:` in the frontmatter above accordingly.
 
