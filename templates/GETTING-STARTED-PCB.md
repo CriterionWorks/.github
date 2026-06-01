@@ -47,11 +47,37 @@ PCB-CR-XXX/
 │
 ├── docs/                            ← all PCB-level documents (required)
 │   ├── assembly.md                  ← assembly and bring-up instructions (required)
+│   ├── fabrication-baseline.md      ← PCB version + EDA tool + fab specs baseline (required)
 │   └── ...                          ← ECO log, test points, errata, inspection checklist
 │
 ├── misc/                            ← anything that doesn't fit above
 └── ...                              ← any other folders the engineer needs
                                         e.g. datasheets/, exports/, renders/
+```
+
+---
+
+## Fabrication Baseline — `docs/fabrication-baseline.md`
+
+Every PCB release must have a baseline entry documenting the exact state at which Gerbers were generated and the board was sent for fabrication:
+
+```
+## PCB-CR-XXX vX.X — Fabrication Baseline
+
+| Item                  | Value                  | Notes                          |
+|-----------------------|------------------------|--------------------------------|
+| PCB Version           | vX.X.X                 | tag: vX.X.X                    |
+| EDA Tool              | e.g. KiCad 7.0.11      |                                |
+| Gerbers generated on  | [date]                 |                                |
+| Gerber standard       | e.g. RS-274X           |                                |
+| Layer count           | e.g. 2                 |                                |
+| Min trace / clearance | e.g. 0.2mm / 0.2mm     |                                |
+| Board finish          | e.g. HASL / ENIG       |                                |
+| Fab house             | e.g. JLCPCB            |                                |
+| BOM version           | vX.X                   |                                |
+
+Gerbers approved by: [name]
+Date sent to fab: [date]
 ```
 
 ---
